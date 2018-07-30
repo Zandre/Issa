@@ -1,0 +1,244 @@
+﻿@using System.Web.Mvc.Html
+@using System.Web.UI.WebControls
+@using BookALook.Classes
+@model BookALook.MVC.ViewModel.DressViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <style>
+        .strongLabel {
+            color: #317eac;
+            font-size: large;
+        }
+    </style>
+</head>
+
+<body>
+<div class="jumbotron">
+    <h1>Design your own dress</h1>
+</div>
+<div style="display: inline-block">
+    <div style="float: left; width: 25%; display: inline-block; vertical-align: top">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Bodices, new {@class = "strongLabel"})
+            @Html.DropDownListFor(m => m.Bodices, new SelectList(Model.Bodices, "Id", "Name"), "Select Bodice Type", new { @id = "bodiceDropdown", @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Skirts, new { @class = "strongLabel" })
+            @Html.DropDownListFor(m => m.Skirts, new SelectList(Model.Skirts, "Id", "Name"), "Select Skirt Type", new { @id = "skirtDropdown", @class = "form-control"})
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Overlays, new { @class = "strongLabel" })
+            @Html.DropDownListFor(m => m.Overlays, new SelectList(Model.Overlays, "Id", "Name"), "Select Overlay Type", new {@id = "overlayDropdown", @class = "form-control"})
+        </div>
+        <div class="form-group">
+            <label for="cupSelect">Cup Size</label>
+            <select class="form-control" id="cupSelect">
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>DD</option>
+                <option>DDD</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="bustSelect">Bust Size</label>
+            <select class="form-control" id="bustSelect">
+                <option>32</option>
+                <option>34</option>
+                <option>36</option>
+                <option>38</option>
+                <option>40</option>
+                <option>42</option>
+                <option>44</option>
+                <option>46</option>
+                <option>48</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="waistSelect">Waist Size</label>
+            <select class="form-control" id="waistSelect">
+                <option>32</option>
+                <option>34</option>
+                <option>36</option>
+                <option>38</option>
+                <option>40</option>
+                <option>42</option>
+                <option>44</option>
+                <option>46</option>
+                <option>48</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="hipsSelect">Hips Size</label>
+            <select class="form-control" id="hipsSelect">
+                <option>32</option>
+                <option>34</option>
+                <option>36</option>
+                <option>38</option>
+                <option>40</option>
+                <option>42</option>
+                <option>44</option>
+                <option>46</option>
+                <option>48</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="hthSelect">Hollow To Hem</label>
+            <select class="form-control" id="hthSelect">
+                <option>32</option>
+                <option>33</option>
+                <option>34</option>
+                <option>35</option>
+                <option>36</option>
+                <option>37</option>
+                <option>38</option>
+                <option>39</option>
+                <option>40</option>
+                <option>41</option>
+                <option>42</option>
+                <option>43</option>
+                <option>44</option>
+                <option>45</option>
+                <option>46</option>
+                <option>47</option>
+                <option>48</option>
+                <option>49</option>
+                <option>50</option>
+            </select>
+        </div>
+    </div>
+    <div style="float: right; width: 73%; display: inline-block; vertical-align: top">
+        <div id="bodicePartial" class="form-group">
+            @Html.Partial("~/Views/Shared/PartialBodiceView.cshtml", Model.Bodices.First())
+        </div>
+        <div id="skirtPartial" class="form-group">
+            @Html.Partial("~/Views/Shared/PartialSkirtView.cshtml", Model.Skirts.First())
+        </div>
+        <div id="overlayPartial" class="form-group">
+            @Html.Partial("~/Views/Shared/PartialOverlayView.cshtml", Model.Overlays.First())
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label for="notes">Notes</label>
+    <textarea class="form-control" id="notes"></textarea>
+    <br/>
+    <button class="btn btn-primary">Request Meeting</button>
+</div>
+</body>
+<script type="text/javascript">
+
+    $(function () {
+            $("#bodiceDropdown").change(function() {
+                var val = $(this).val();
+                if (val > 0) {
+                    $.ajax({
+                        type: 'get',
+                        url: '/Home/BodiceDetails',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'html',
+                        data: { "id": val },
+                        success: function (result) {
+                            var section = document.getElementById("bodicePartial");
+                            section.innerHTML = result;
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert(xhr.status);
+                            alert(thrownError);
+                        }
+                    });
+                }
+            });
+    });
+
+    $(function () {
+        $("#skirtDropdown").change(function () {
+            var val = $(this).val();
+            if (val > 0) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Home/SkirtDetails',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'html',
+                    data: { "id": val },
+                    success: function (result) {
+                        var section = document.getElementById("skirtPartial");
+                        section.innerHTML = result;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    }
+                });
+            }
+        });
+    });
+
+    $(function () {
+        $("#overlayDropdown").change(function () {
+            var val = $(this).val();
+            if (val > 0) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Home/OverlayDetails',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'html',
+                    data: { "id": val },
+                    success: function (result) {
+                        var section = document.getElementById("overlayPartial");
+                        section.innerHTML = result;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    }
+                });
+            }
+        });
+    });
+
+
+    @*function SkirtChanged(val) {
+        if (val > 0) {
+            $.ajax({
+                type: 'get',
+                url: '@Url.Content("SkirtDetails")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'html',
+                data: { "id": val },
+                success: function (result) {
+                    var section = document.getElementById("skirtPartial");
+                    section.innerHTML = result;
+                },
+                error: function (ex) {
+                    alert("Error: " + ex);
+                }
+            });
+        }
+    }
+
+    function OverlayChanged(val) {
+        if (val > 0) {
+            $.ajax({
+                type: 'get',
+                url: '@Url.Content("OverlayDetails")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'html',
+                data: { "id": val },
+                success: function (result) {
+                    var section = document.getElementById("overlayPartial");
+                    section.innerHTML = result;
+                },
+                error: function (ex) {
+                    alert("Error: " + ex);
+                }
+            });
+        }
+    }*@
+</script>
+
+

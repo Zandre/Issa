@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BookALook.Classes.Overlay>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Overlays</h2>
+
+<p>
+    @Html.ActionLink("Create New Overlay", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table">    
+    <tr>
+        <th width="15%">
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th width="70%">
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th width="15%">
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Name, "Edit", new {id = item.Id})
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                R @Html.DisplayFor(modelItem => item.Price)
+            </td>
+        </tr>
+    }
+
+</table>
