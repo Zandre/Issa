@@ -57,8 +57,28 @@
     <script src="~/Content/demo.js"></script>
     <script src="~/Content/prism.js"></script>
 
-    <script>
-        Demo.init();
-    </script>
+<script>
+    Demo.init();
+</script>
+<script type="text/javascript">
+    function SaveImageData() {
+        var imageData = document.getElementById("imageData").src;
+        var modelId = document.getElementById("modelId").value;
+
+        jQuery.ajax({
+            type: "POST",
+            url: "@Url.Action("SaveImageData", "Bodices")",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ bodiceId: modelId, imageData: imageData }),
+            success: function (data) {
+                alert(data);
+            },
+            failure: function (errMsg) {
+                alert(errMsg);
+            }
+        });
+    }
+</script>
 </body>
 </html>

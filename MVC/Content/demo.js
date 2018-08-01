@@ -2,30 +2,16 @@ var Demo = (function() {
 
     function popupResult(result) {
 
+        //console.log("popupResult()");
+        console.log(result.src);
+
         event.preventDefault();
 
-		var html;
-		if (result.html) {
-			html = result.html;
-		}
-		if (result.src) {
-			html = '<img src="' + result.src + '" />';
-		}
-        swal({
-            title: '',
-            html: true,
-            text: html,
-            allowOutsideClick: true
-        });
-        setTimeout(function () {
-            $('.sweet-alert').css('margin', function () {
-                var top = -1 * ($(this).height() / 2),
-                    left = -1 * ($(this).width() / 2);
-
-                return top + 'px 0 0 ' + left + 'px';
-            });
-        }, 40000);
-	}
+        var image = document.getElementById("image");
+        var hiddenField = document.getElementById("imageData");
+        image.src = result.src;
+        hiddenField.src = result.src;
+    }
 
 	function demoUpload() {
 		var $uploadCrop;
@@ -67,10 +53,10 @@ var Demo = (function() {
 			$uploadCrop.croppie('result', {
 				type: 'canvas',
 				size: 'viewport'
-			}).then(function (resp) {
-				popupResult({
-					src: resp
-				});
+            }).then(function (resp) {
+			    popupResult({
+			        src: resp
+			    });
 			});
 		});
 	}

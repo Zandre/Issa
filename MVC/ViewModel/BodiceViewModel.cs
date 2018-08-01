@@ -22,10 +22,8 @@ namespace BookALook.MVC.ViewModel
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
-
         public byte[] ImageData { get; set; }
-        public HttpPostedFileBase UploadImages { get; set; }   
-        
-        public string Preview { get; set; }     
+        public HttpPostedFileBase UploadImages { get; set; }
+
     }
 }

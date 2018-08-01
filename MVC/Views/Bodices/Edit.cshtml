@@ -20,10 +20,10 @@
         <h4>Bodice</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Id, new { id = "modelId" })
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", id="nameEditor" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
@@ -31,7 +31,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", id = "descriptionEditor" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
@@ -39,65 +39,62 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", id = "priceEditor" } })
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
         </div>  
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-2 col-md-4">
                 @if (Model != null)
                 {
                     if (Model.ImageData == null)
                     {
-                        <img width="100" id="image" height="150" style="border-radius: 8px" src="~/Content/Images/Bodices/defaultBodice.JPG">
+                        <img width="200" id="image" height="600" style="border-radius: 8px" src="~/Content/Images/Bodices/defaultBodice.JPG">
                     }
                     else
                     {
-                        <img width="100" id="image" height="150" style="border-radius: 8px" src="data:image; base64, @Convert.ToBase64String(Model.ImageData)" />
+                        
+                        <img width="200" id="image" height="600" style="border-radius: 8px" src="data:image; base64, @Convert.ToBase64String(Model.ImageData)" />                       
                     }
                 }
                 else
                 {
-                    <img width="100" id="image" height="150" style="border-radius: 8px" src="~/Content/Images/Bodices/defaultBodice.JPG">
+                    <img width="200" id="image" height="600" style="border-radius: 8px" src="~/Content/Images/Bodices/defaultBodice.JPG">
                 }
                 <br />
                 <br />
-                <label for="uploadImages">Select New Bodice Image:</label><input type="file" name="uploadImages" id="uploadImages" class="form-control-file" onchange="readUrl(this);" />
+                @Html.HiddenFor(model => model.ImageData, new { id = "imageData" })
+                <label for="uploadImages">Select New Bodice Image:</label>
+                <input type="file" name="uploadImages" id="uploadImages" class="form-control-file" onchange="readUrl(this);" />
                 <br />
             </div>
         </div>
         
         <div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Save Details</button>
+            <button class="btn btn-primary" onclick="SaveImageData()">Save Image</button>
+            <a class="btn btn-primary">
+                <span>Upload</span>
+                <input type="file" id="upload" value="Choose a file" accept="image/*" />
+            </a>
+            <button class="btn btn-primary upload-result">Preview</button>
+        </div>
+        <div>
+            @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-warning"})
         </div>
         
-        
-
-        <div class="col-1-2">
-            <strong>Upload Example (with exif orientation compatability)</strong>
-
-            <div class="actions">
-                <a class="btn file-btn">
-                    <span>Upload</span>
-                    <input type="file" id="upload" value="Choose a file" accept="image/*" />
-                </a>
-
-                <button class="upload-result">Result</button>
-            </div>
-        </div>
+       
         <div class="col-1-2">
             <div class="upload-demo-wrap">
                 <div id="upload-demo"></div>
             </div>
         </div>
-
     </div>
 }
 <br/>
-<div>
-    @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-warning"})
-</div>
+
+
 
 @*<script type="text/javascript">
     function readUrl(input) {

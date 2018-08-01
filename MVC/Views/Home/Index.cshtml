@@ -17,10 +17,10 @@
 
 <body>
 <div class="jumbotron">
-    <h1>Design your own dress</h1>
+    <h1>Issa</h1>
 </div>
 <div style="display: inline-block">
-    <div style="float: left; width: 25%; display: inline-block; vertical-align: top">
+    <div style="float: left; width: 40%; display: inline-block; vertical-align: top">
         <div class="form-group">
             @Html.LabelFor(m => m.Bodices, new {@class = "strongLabel"})
             @Html.DropDownListFor(m => m.Bodices, new SelectList(Model.Bodices, "Id", "Name"), "Select Bodice Type", new { @id = "bodiceDropdown", @class = "form-control" })
@@ -111,7 +111,7 @@
             </select>
         </div>
     </div>
-    <div style="float: right; width: 73%; display: inline-block; vertical-align: top">
+    <div style="float: right; width: 55%; display: inline-block; vertical-align: top">
         <div id="bodicePartial" class="form-group">
             @Html.Partial("~/Views/Shared/PartialBodiceView.cshtml", Model.Bodices.First())
         </div>
