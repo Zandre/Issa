@@ -53,11 +53,11 @@ namespace BookALook.MVC.Controllers
         {
             if (id == null)
             {
-                BodiceViewModel emptyViewModel = new BodiceViewModel();
+                WeddingGownItemVm emptyViewModel = new WeddingGownItemVm();
                 return View(emptyViewModel);
             }
             Bodice bodice = db.Bodices.Find(id);
-            BodiceViewModel viewModel = new BodiceViewModel(bodice);
+            WeddingGownItemVm viewModel = new WeddingGownItemVm(bodice);
             if (viewModel.Id == 0)
             {
                 return HttpNotFound();
@@ -80,14 +80,14 @@ namespace BookALook.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult SaveBodiceDetails(BodiceViewModel viewModel)
+        public ActionResult SaveBodiceDetails(WeddingGownItemVm viewModel)
         {
             if (ModelState.IsValid)
             {
                 Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == viewModel.Id);
                 if (bodice == null)
                 {
-                    Bodice newBodice = viewModel.Bodice();
+                    Bodice newBodice = viewModel.BaseWeddingGownItem() as Bodice;
                     db.Entry(newBodice).State = EntityState.Added;
                     db.Bodices.Add(newBodice);
                     db.SaveChanges();

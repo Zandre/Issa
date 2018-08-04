@@ -210,11 +210,9 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModel\BodiceViewModel.cs" />
+    <Compile Include="ViewModel\WeddingGownItemVm.cs" />
     <Compile Include="ViewModel\DressViewModel.cs" />
     <Compile Include="ViewModel\ImageVm.cs" />
-    <Compile Include="ViewModel\OverlayViewModel.cs" />
-    <Compile Include="ViewModel\SkirtViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -288,15 +286,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Bodices\BodiceDetailsForm.cshtml" />
     <Content Include="Views\Bodices\Index.cshtml" />
-    <Content Include="Views\Skirts\Create.cshtml" />
-    <Content Include="Views\Skirts\Delete.cshtml" />
-    <Content Include="Views\Skirts\Details.cshtml" />
-    <Content Include="Views\Skirts\Edit.cshtml" />
+    <Content Include="Views\Skirts\SkirtDetailsForm.cshtml" />
     <Content Include="Views\Skirts\Index.cshtml" />
-    <Content Include="Views\Overlays\Create.cshtml" />
-    <Content Include="Views\Overlays\Delete.cshtml" />
-    <Content Include="Views\Overlays\Details.cshtml" />
-    <Content Include="Views\Overlays\Edit.cshtml" />
+    <Content Include="Views\Overlays\OverlayDetailsForm.cshtml" />
     <Content Include="Views\Overlays\Index.cshtml" />
     <Content Include="Views\Shared\PartialBodiceView.cshtml" />
     <Content Include="Views\Shared\PartialOverlayView.cshtml" />

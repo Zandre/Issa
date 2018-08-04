@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using BookALook.Classes;
 using BookALook.DomainModel;
 using BookALook.MVC.ViewModel;
+using MVC.ViewModel;
 
 namespace BookALook.MVC.Controllers
 {
@@ -23,19 +21,15 @@ namespace BookALook.MVC.Controllers
             return View(db.Overlays.ToList());
         }
 
-        // GET: Overlays/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Image(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Overlay overlay = db.Overlays.Find(id);
             if (overlay == null)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View(overlay);
+            ImageVm viewModel = new ImageVm(overlay);
+            return View("ImageForm", viewModel);
         }
 
         public ActionResult SaveImageData(int overlayId, string imageData)
@@ -56,51 +50,25 @@ namespace BookALook.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Overlays/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Overlays/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Price")] Overlay overlay)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Overlays.Add(overlay);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(overlay);
-        }
-
-        // GET: Overlays/BodiceDetailsForm/5
-        public ActionResult Edit(int? id)
+        public ActionResult OverlayDetailsForm(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                WeddingGownItemVm emptyViewModel = new WeddingGownItemVm();
+                return View(emptyViewModel);
             }
             Overlay overlay = db.Overlays.Find(id);
-            OverlayViewModel viewModel = new OverlayViewModel(overlay);
-            if (viewModel == null)
+            WeddingGownItemVm viewModel = new WeddingGownItemVm(overlay);
+            if (viewModel.Id == 0)
             {
                 return HttpNotFound();
             }
             return View(viewModel);
         }
 
-        // POST: Overlays/BodiceDetailsForm/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Price")] Overlay overlay)
+        public ActionResult OverlayDetailsForm([Bind(Include = "Id,Name,Description,Price")] Overlay overlay)
         {
             if (ModelState.IsValid)
             {
@@ -110,57 +78,22 @@ namespace BookALook.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Overlays/Delete/5
-        public ActionResult Delete(int? id)
+        [HttpPost]
+        public ActionResult SaveOverlayDetails(WeddingGownItemVm viewModel)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Overlay overlay = db.Overlays.Find(id);
+            Overlay overlay = db.Overlays.FirstOrDefault(b => b.Id == viewModel.Id);
             if (overlay == null)
             {
-                return HttpNotFound();
+                Overlay newOverlay = viewModel.BaseWeddingGownItem() as Overlay;
+                db.Entry(newOverlay).State = EntityState.Added;
+                db.Overlays.Add(newOverlay);
+                db.SaveChanges();
             }
-            return View(overlay);
-        }
-
-        // POST: Overlays/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Overlay overlay = db.Overlays.Find(id);
-            db.Overlays.Remove(overlay);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            else if (overlay.Id != 0)
             {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        [HttpPost]
-        public ActionResult Save(OverlayViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                Overlay overlay = db.Overlays.FirstOrDefault(o => o.Id == viewModel.Id);
                 overlay.Name = viewModel.Name;
                 overlay.Description = viewModel.Description;
                 overlay.Price = viewModel.Price;
-                if (viewModel.UploadImages != null)
-                {
-                    MemoryStream stream = new MemoryStream();
-                    viewModel.UploadImages.InputStream.CopyTo(stream);
-                    byte[] imageData = stream.ToArray();
-                    overlay.ImageData = imageData;
-                }
                 db.Entry(overlay).State = EntityState.Modified;
                 db.SaveChanges();
             }

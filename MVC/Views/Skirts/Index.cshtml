@@ -7,7 +7,7 @@
 <h2>Skirts</h2>
 
 <p>
-    @Html.ActionLink("Create New Skirt", "Create", null ,new {@class = "btn btn-primary"})
+    @Html.ActionLink("Create New Skirt", "SkirtDetailsForm", null ,new {@class = "btn btn-primary"})
 </p>
 <table class="table">
     <tr>
@@ -26,7 +26,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.Name, "Edit", new { id = item.Id }) 
+            @Html.ActionLink(item.Name, "SkirtDetailsForm", new { id = item.Id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)

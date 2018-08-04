@@ -7,7 +7,7 @@
 <h2>Overlays</h2>
 
 <p>
-    @Html.ActionLink("Create New Overlay", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create New Overlay", "OverlayDetailsForm", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">    
     <tr>
@@ -26,7 +26,7 @@
     {
         <tr>
             <td>
-                @Html.ActionLink(item.Name, "Edit", new {id = item.Id})
+                @Html.ActionLink(item.Name, "OverlayDetailsForm", new {id = item.Id})
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)

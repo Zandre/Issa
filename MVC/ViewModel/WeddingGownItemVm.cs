@@ -3,9 +3,9 @@ using BookALook.Classes;
 
 namespace BookALook.MVC.ViewModel
 {
-    public class BodiceViewModel
+    public class WeddingGownItemVm
     {
-        public BodiceViewModel(BaseWeddingGownItem baseWeddingGownItem)
+        public WeddingGownItemVm(BaseWeddingGownItem baseWeddingGownItem)
         {
             Id = baseWeddingGownItem.Id;
             Name = baseWeddingGownItem.Name;
@@ -13,20 +13,20 @@ namespace BookALook.MVC.ViewModel
             Price = baseWeddingGownItem.Price;
         }
 
-        public BodiceViewModel()
+        public WeddingGownItemVm()
         {            
         }
 
-        public Bodice Bodice()
+        public BaseWeddingGownItem BaseWeddingGownItem()
         {
-            Bodice bodice = new Bodice()
+            BaseWeddingGownItem baseWeddingGownItem = new BaseWeddingGownItem()
             {
                 Id = this.Id,
                 Name = this.Name,
                 Description = this.Description,
                 Price = this.Price
             };
-            return bodice;
+            return baseWeddingGownItem;
         }
 
         public int Id { get; set; }
