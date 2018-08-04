@@ -38,6 +38,24 @@ namespace BookALook.MVC.Controllers
             return View(skirt);
         }
 
+        public ActionResult SaveImageData(int skirtId, string imageData)
+        {
+            Skirt skirt = db.Skirts.FirstOrDefault(b => b.Id == skirtId);
+            if (skirt.Id != 0)
+            {
+                imageData = imageData.Replace('-', '+');
+                imageData = imageData.Replace('_', '/');
+                imageData = imageData.Replace("data:image/png;base64,", "");
+                imageData = imageData.TrimEnd();
+                imageData = imageData.TrimStart();
+                byte[] newBytes = Convert.FromBase64String(imageData);
+                skirt.ImageData = newBytes;
+                db.Entry(skirt).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
         // GET: Skirts/Create
         public ActionResult Create()
         {

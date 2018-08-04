@@ -61,13 +61,24 @@
     Demo.init();
 </script>
 <script type="text/javascript">
-    function SaveImageData() {
+    function SaveImageData(itemType) {
         var imageData = document.getElementById("imageData").src;
         var modelId = document.getElementById("modelId").value;
 
+        var _url = "";
+        if (itemType === 1) {
+            _url =  "@Url.Action("SaveImageData", "Bodices")";
+        }
+        if (itemType === 2) {
+            _url =  "@Url.Action("SaveImageData", "Skirts")";
+        }
+        if (itemType === 3) {
+            _url =  "@Url.Action("SaveImageData", "Overlays")";
+        }
+
         jQuery.ajax({
             type: "POST",
-            url: "@Url.Action("SaveImageData", "Bodices")",
+            url: _url,
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({ bodiceId: modelId, imageData: imageData }),

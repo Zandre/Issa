@@ -38,6 +38,24 @@ namespace BookALook.MVC.Controllers
             return View(overlay);
         }
 
+        public ActionResult SaveImageData(int overlayId, string imageData)
+        {
+            Overlay overlay = db.Overlays.FirstOrDefault(b => b.Id == overlayId);
+            if (overlay.Id != 0)
+            {
+                imageData = imageData.Replace('-', '+');
+                imageData = imageData.Replace('_', '/');
+                imageData = imageData.Replace("data:image/png;base64,", "");
+                imageData = imageData.TrimEnd();
+                imageData = imageData.TrimStart();
+                byte[] newBytes = Convert.FromBase64String(imageData);
+                overlay.ImageData = newBytes;
+                db.Entry(overlay).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
         // GET: Overlays/Create
         public ActionResult Create()
         {

@@ -5,6 +5,8 @@
 }
 
 <h2>@Model.Name</h2>
+<h3>@Model._baseWeddingGownItem.GetType().ToString()</h3>
+
 @using (Html.BeginForm("SaveImageData", "Bodices", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -13,7 +15,7 @@
         
         <div class="form-group">
             <div align="center">
-                @Html.ActionLink("Save", "", "Bodices", new { id = Model.Id }, new { @class = "btn btn-primary", onclick="SaveImageData();" }) 
+                @Html.ActionLink("Save", "", "Bodices", new { id = Model.Id }, new { @class = "btn btn-primary", onclick="SaveImageData("+Model.ItemType+");" }) 
                 @Html.ActionLink("Back", "Edit", "Bodices", new {id = Model.Id}, new {@class = "btn btn-warning"})
                 <a class="btn file-btn btn-info">
                     <span>Upload</span>
