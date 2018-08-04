@@ -79,7 +79,7 @@ namespace BookALook.MVC.Controllers
             return View(skirt);
         }
 
-        // GET: Skirts/Edit/5
+        // GET: Skirts/BodiceDetailsForm/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,7 +95,7 @@ namespace BookALook.MVC.Controllers
             return View(viewModel);
         }
 
-        // POST: Skirts/Edit/5
+        // POST: Skirts/BodiceDetailsForm/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]

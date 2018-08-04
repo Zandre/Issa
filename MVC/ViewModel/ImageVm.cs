@@ -1,4 +1,5 @@
-﻿using BookALook.Classes;
+﻿using System;
+using BookALook.Classes;
 
 namespace MVC.ViewModel
 {
@@ -12,7 +13,14 @@ namespace MVC.ViewModel
 
             Id = baseWeddingGownItem.Id;
             Name = baseWeddingGownItem.Name;
-            ImageData = baseWeddingGownItem.ImageData;
+            if (baseWeddingGownItem.ImageData != null)
+            {
+                ImageData = baseWeddingGownItem.ImageData;
+            }
+            else
+            {
+                ImageData = new Byte[64];
+            }
         }
 
         public int Id { get; set; }

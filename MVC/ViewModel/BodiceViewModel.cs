@@ -5,16 +5,28 @@ namespace BookALook.MVC.ViewModel
 {
     public class BodiceViewModel
     {
-        public BodiceViewModel(Bodice bodice)
+        public BodiceViewModel(BaseWeddingGownItem baseWeddingGownItem)
         {
-            Id = bodice.Id;
-            Name = bodice.Name;
-            Description = bodice.Description;
-            Price = bodice.Price;
+            Id = baseWeddingGownItem.Id;
+            Name = baseWeddingGownItem.Name;
+            Description = baseWeddingGownItem.Description;
+            Price = baseWeddingGownItem.Price;
         }
 
         public BodiceViewModel()
         {            
+        }
+
+        public Bodice Bodice()
+        {
+            Bodice bodice = new Bodice()
+            {
+                Id = this.Id,
+                Name = this.Name,
+                Description = this.Description,
+                Price = this.Price
+            };
+            return bodice;
         }
 
         public int Id { get; set; }

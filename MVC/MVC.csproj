@@ -286,10 +286,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Bodices\Create.cshtml" />
-    <Content Include="Views\Bodices\Delete.cshtml" />
-    <Content Include="Views\Bodices\Details.cshtml" />
-    <Content Include="Views\Bodices\Edit.cshtml" />
+    <Content Include="Views\Bodices\BodiceDetailsForm.cshtml" />
     <Content Include="Views\Bodices\Index.cshtml" />
     <Content Include="Views\Skirts\Create.cshtml" />
     <Content Include="Views\Skirts\Delete.cshtml" />
@@ -304,7 +301,7 @@
     <Content Include="Views\Shared\PartialBodiceView.cshtml" />
     <Content Include="Views\Shared\PartialOverlayView.cshtml" />
     <Content Include="Views\Shared\PartialSkirtView.cshtml" />
-    <Content Include="Views\Shared\ImageFrom.cshtml" />
+    <Content Include="Views\Shared\ImageForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

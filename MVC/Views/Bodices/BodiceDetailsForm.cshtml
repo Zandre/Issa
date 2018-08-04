@@ -3,11 +3,11 @@
 @model BookALook.MVC.ViewModel.BodiceViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "BodiceDetailsForm";
 }
 <h2>@Model.Name</h2>
 
-@using (Html.BeginForm("Save", "Bodices", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SaveBodiceDetails", "Bodices", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -40,9 +40,9 @@
         </div>  
 
         <div>
-            <button type="submit" class="btn btn-primary">Save Details</button>   
+            <button type="submit" class="btn btn-primary">Save</button>   
             @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-warning"})
-            @Html.ActionLink("Image", "Image", new { id = Model.Id }, new{@class = "btn btn-primary"})
+            @Html.ActionLink("Image", "Image", new { id = Model.Id }, new{@class = "btn btn-info"})
         </div>            
     </div>
 }

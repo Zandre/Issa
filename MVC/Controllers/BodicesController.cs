@@ -20,21 +20,6 @@ namespace BookALook.MVC.Controllers
             return View(db.Bodices.ToList());
         }
 
-        // GET: Bodices/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Bodice bodice = db.Bodices.Find(id);
-            if (bodice == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bodice);
-        }
-
         public ActionResult Image(int? id)
         {
             Bodice bodice = db.Bodices.Find(id);
@@ -43,7 +28,7 @@ namespace BookALook.MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ImageVm viewModel = new ImageVm(bodice);
-            return View("ImageFrom", viewModel);
+            return View("ImageForm", viewModel);
         }
 
         public ActionResult SaveImageData(int bodiceId, string imageData)
@@ -64,51 +49,28 @@ namespace BookALook.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Bodices/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Bodices/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Price")] Bodice bodice)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Bodices.Add(bodice);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(bodice);
-        }
-
-        // GET: Bodices/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult BodiceDetailsForm(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                BodiceViewModel emptyViewModel = new BodiceViewModel();
+                return View(emptyViewModel);
             }
             Bodice bodice = db.Bodices.Find(id);
             BodiceViewModel viewModel = new BodiceViewModel(bodice);
-            if (viewModel == null)
+            if (viewModel.Id == 0)
             {
                 return HttpNotFound();
             }
             return View(viewModel);
         }
 
-        // POST: Bodices/Edit/5
+        // POST: Bodices/BodiceDetailsForm/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Price")] Bodice bodice)
+        public ActionResult BodiceDetailsForm([Bind(Include = "Id,Name,Description,Price")] Bodice bodice)
         {
             if (ModelState.IsValid)
             {
@@ -118,47 +80,19 @@ namespace BookALook.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Bodices/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Bodice bodice = db.Bodices.Find(id);
-            if (bodice == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bodice);
-        }
-
-        // POST: Bodices/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Bodice bodice = db.Bodices.Find(id);
-            db.Bodices.Remove(bodice);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        public ActionResult Save(BodiceViewModel viewModel)
+        public ActionResult SaveBodiceDetails(BodiceViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == viewModel.Id);
-                if (bodice.Id != 0)
+                if (bodice == null)
+                {
+                    Bodice newBodice = viewModel.Bodice();
+                    db.Entry(newBodice).State = EntityState.Added;
+                    db.Bodices.Add(newBodice);
+                    db.SaveChanges();
+                }
+                else if (bodice.Id != 0)
                 {
                     bodice.Name = viewModel.Name;
                     bodice.Description = viewModel.Description;
