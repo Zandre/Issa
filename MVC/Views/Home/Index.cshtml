@@ -19,8 +19,8 @@
 <div class="jumbotron">
     <h1>Issa</h1>
 </div>
-<div style="display: inline-block">
-    <div style="float: left; width: 40%; display: inline-block; vertical-align: top">
+<div>
+    <div class="col-md-5">
         <div class="form-group">
             @Html.LabelFor(m => m.Bodices, new {@class = "strongLabel"})
             @Html.DropDownListFor(m => m.Bodices, new SelectList(Model.Bodices, "Id", "Name"), "Select Bodice Type", new { @id = "bodiceDropdown", @class = "form-control" })
@@ -33,85 +33,8 @@
             @Html.LabelFor(m => m.Overlays, new { @class = "strongLabel" })
             @Html.DropDownListFor(m => m.Overlays, new SelectList(Model.Overlays, "Id", "Name"), "Select Overlay Type", new {@id = "overlayDropdown", @class = "form-control"})
         </div>
-        <div class="form-group">
-            <label for="cupSelect">Cup Size</label>
-            <select class="form-control" id="cupSelect">
-                <option>A</option>
-                <option>B</option>
-                <option>C</option>
-                <option>D</option>
-                <option>DD</option>
-                <option>DDD</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="bustSelect">Bust Size</label>
-            <select class="form-control" id="bustSelect">
-                <option>32</option>
-                <option>34</option>
-                <option>36</option>
-                <option>38</option>
-                <option>40</option>
-                <option>42</option>
-                <option>44</option>
-                <option>46</option>
-                <option>48</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="waistSelect">Waist Size</label>
-            <select class="form-control" id="waistSelect">
-                <option>32</option>
-                <option>34</option>
-                <option>36</option>
-                <option>38</option>
-                <option>40</option>
-                <option>42</option>
-                <option>44</option>
-                <option>46</option>
-                <option>48</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="hipsSelect">Hips Size</label>
-            <select class="form-control" id="hipsSelect">
-                <option>32</option>
-                <option>34</option>
-                <option>36</option>
-                <option>38</option>
-                <option>40</option>
-                <option>42</option>
-                <option>44</option>
-                <option>46</option>
-                <option>48</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="hthSelect">Hollow To Hem</label>
-            <select class="form-control" id="hthSelect">
-                <option>32</option>
-                <option>33</option>
-                <option>34</option>
-                <option>35</option>
-                <option>36</option>
-                <option>37</option>
-                <option>38</option>
-                <option>39</option>
-                <option>40</option>
-                <option>41</option>
-                <option>42</option>
-                <option>43</option>
-                <option>44</option>
-                <option>45</option>
-                <option>46</option>
-                <option>47</option>
-                <option>48</option>
-                <option>49</option>
-                <option>50</option>
-            </select>
-        </div>
     </div>
-    <div style="float: right; width: 55%; display: inline-block; vertical-align: top">
+    <div class="col-md-7">
         <div id="bodicePartial" class="form-group">
             @Html.Partial("~/Views/Shared/PartialBodiceView.cshtml", Model.Bodices.First())
         </div>
@@ -123,13 +46,103 @@
         </div>
     </div>
 </div>
-<div class="form-group">
-    <label for="notes">Notes</label>
-    <textarea class="form-control" id="notes"></textarea>
-    <br/>
-    <button class="btn btn-primary">Request Meeting</button>
+
+<div class="col-md-12">
+    <div class="form-group col-md-4">
+        <label for="cupSelect">Cup Size</label>
+        <select class="form-control" id="cupSelect">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+            <option>D</option>
+            <option>DD</option>
+            <option>DDD</option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="bustSelect">Bust Size</label>
+        <select class="form-control" id="bustSelect">
+            <option>32</option>
+            <option>34</option>
+            <option>36</option>
+            <option>38</option>
+            <option>40</option>
+            <option>42</option>
+            <option>44</option>
+            <option>46</option>
+            <option>48</option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="waistSelect">Waist Size</label>
+        <select class="form-control" id="waistSelect">
+            <option>32</option>
+            <option>34</option>
+            <option>36</option>
+            <option>38</option>
+            <option>40</option>
+            <option>42</option>
+            <option>44</option>
+            <option>46</option>
+            <option>48</option>
+        </select>
+    </div>
 </div>
+
+<div class="col-md-12">
+    <div class="form-group col-md-4">
+        <label for="hipsSelect">Hips Size</label>
+        <select class="form-control" id="hipsSelect">
+            <option>32</option>
+            <option>34</option>
+            <option>36</option>
+            <option>38</option>
+            <option>40</option>
+            <option>42</option>
+            <option>44</option>
+            <option>46</option>
+            <option>48</option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="hthSelect">Hollow To Hem</label>
+        <select class="form-control" id="hthSelect">
+            <option>32</option>
+            <option>33</option>
+            <option>34</option>
+            <option>35</option>
+            <option>36</option>
+            <option>37</option>
+            <option>38</option>
+            <option>39</option>
+            <option>40</option>
+            <option>41</option>
+            <option>42</option>
+            <option>43</option>
+            <option>44</option>
+            <option>45</option>
+            <option>46</option>
+            <option>47</option>
+            <option>48</option>
+            <option>49</option>
+            <option>50</option>
+        </select>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="notes">Notes</label>
+        <textarea class="form-control" id="notes"></textarea>
+    </div>
+</div>
+
+
+<div class="row form-group">
+    <div class="form-group col-md-4">
+        <button class="btn btn-primary">Request Meeting</button>
+    </div>
+</div>
+
 </body>
+
 <script type="text/javascript">
 
     $(function () {
@@ -201,44 +214,6 @@
         });
     });
 
-
-    @*function SkirtChanged(val) {
-        if (val > 0) {
-            $.ajax({
-                type: 'get',
-                url: '@Url.Content("SkirtDetails")',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'html',
-                data: { "id": val },
-                success: function (result) {
-                    var section = document.getElementById("skirtPartial");
-                    section.innerHTML = result;
-                },
-                error: function (ex) {
-                    alert("Error: " + ex);
-                }
-            });
-        }
-    }
-
-    function OverlayChanged(val) {
-        if (val > 0) {
-            $.ajax({
-                type: 'get',
-                url: '@Url.Content("OverlayDetails")',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'html',
-                data: { "id": val },
-                success: function (result) {
-                    var section = document.getElementById("overlayPartial");
-                    section.innerHTML = result;
-                },
-                error: function (ex) {
-                    alert("Error: " + ex);
-                }
-            });
-        }
-    }*@
 </script>
 
 
