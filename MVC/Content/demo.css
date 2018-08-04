@@ -83,8 +83,8 @@ section.who {
     padding: 5px 0;
 }
 
-button,
-a.btn {
+/*button,*/
+/*a.btn {
     background-color: #189094;
     color: white;
     padding: 10px 15px;
@@ -96,7 +96,7 @@ a.btn {
     text-shadow: none;
     display: inline-block;
     cursor: pointer;
-}
+}*/
 input[type="file"] {
     cursor: pointer;
 }
