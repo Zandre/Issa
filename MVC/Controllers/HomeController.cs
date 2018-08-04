@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using BookALook.Classes;
 using BookALook.DomainModel;
 using BookALook.MVC.ViewModel;
 
@@ -41,18 +42,21 @@ namespace BookALook.MVC.Controllers
 
 
         public ActionResult BodiceDetails(int id)
-        {
-            return PartialView("/Views/Shared/PartialBodiceView.cshtml", _context.Bodices.FirstOrDefault(b => b.Id == id));
+        {            
+            WeddingGownItemVm viewModel = new WeddingGownItemVm(_context.Bodices.FirstOrDefault(b => b.Id == id));
+            return PartialView("/Views/Shared/PartialBodiceView.cshtml", viewModel);
         }
 
         public ActionResult SkirtDetails(int id)
         {
-            return PartialView("/Views/Shared/PartialSkirtView.cshtml", _context.Skirts.FirstOrDefault(s => s.Id == id));
+            WeddingGownItemVm viewModel = new WeddingGownItemVm(_context.Skirts.FirstOrDefault(b => b.Id == id));
+            return PartialView("/Views/Shared/PartialSkirtView.cshtml", viewModel);
         }
 
         public ActionResult OverlayDetails(int id)
         {
-            return PartialView("/Views/Shared/PartialOverlayView.cshtml", _context.Overlays.FirstOrDefault(o => o.Id == id));
+            WeddingGownItemVm viewModel = new WeddingGownItemVm(_context.Overlays.FirstOrDefault(b => b.Id == id));
+            return PartialView("/Views/Shared/PartialOverlayView.cshtml", viewModel);
         }
     }
 }

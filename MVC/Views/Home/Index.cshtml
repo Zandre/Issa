@@ -1,6 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @using System.Web.UI.WebControls
 @using BookALook.Classes
+@using BookALook.MVC.ViewModel
 @model BookALook.MVC.ViewModel.DressViewModel
 @{
     ViewBag.Title = "Home Page";
@@ -20,7 +21,7 @@
     <h1>Issa</h1>
 </div>
 <div>
-    <div class="col-md-5">
+    <div class="col-md-4">
         <div class="form-group">
             @Html.LabelFor(m => m.Bodices, new {@class = "strongLabel"})
             @Html.DropDownListFor(m => m.Bodices, new SelectList(Model.Bodices, "Id", "Name"), "Select Bodice Type", new { @id = "bodiceDropdown", @class = "form-control" })
@@ -34,15 +35,15 @@
             @Html.DropDownListFor(m => m.Overlays, new SelectList(Model.Overlays, "Id", "Name"), "Select Overlay Type", new {@id = "overlayDropdown", @class = "form-control"})
         </div>
     </div>
-    <div class="col-md-7">
-        <div id="bodicePartial" class="form-group">
-            @Html.Partial("~/Views/Shared/PartialBodiceView.cshtml", Model.Bodices.First())
+    <div class="col-md-8">
+        <div id="bodicePartial" class="form-group row">
+            @Html.Partial("~/Views/Shared/PartialBodiceView.cshtml", new WeddingGownItemVm(Model.Bodices.First()))
         </div>
-        <div id="skirtPartial" class="form-group">
-            @Html.Partial("~/Views/Shared/PartialSkirtView.cshtml", Model.Skirts.First())
+        <div id="skirtPartial" class="form-group row">
+            @Html.Partial("~/Views/Shared/PartialSkirtView.cshtml", new WeddingGownItemVm(Model.Skirts.First()))
         </div>
-        <div id="overlayPartial" class="form-group">
-            @Html.Partial("~/Views/Shared/PartialOverlayView.cshtml", Model.Overlays.First())
+        <div id="overlayPartial" class="form-group row">
+            @Html.Partial("~/Views/Shared/PartialOverlayView.cshtml", new WeddingGownItemVm(Model.Overlays.First()))
         </div>
     </div>
 </div>

@@ -11,6 +11,7 @@ namespace BookALook.MVC.ViewModel
             Name = baseWeddingGownItem.Name;
             Description = baseWeddingGownItem.Description;
             Price = baseWeddingGownItem.Price;
+            ImageData = baseWeddingGownItem.ImageData;
         }
 
         public WeddingGownItemVm()
@@ -24,7 +25,8 @@ namespace BookALook.MVC.ViewModel
                 Id = this.Id,
                 Name = this.Name,
                 Description = this.Description,
-                Price = this.Price
+                Price = this.Price,
+                ImageData = this.ImageData
             };
             return baseWeddingGownItem;
         }
@@ -32,6 +34,8 @@ namespace BookALook.MVC.ViewModel
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int Price { get; set; }      
+        public int Price { get; set; }
+
+        public byte[] ImageData { get; set; }
     }
 }
