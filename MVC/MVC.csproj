@@ -227,6 +227,7 @@
     <Content Include="Content\Images\dress.ico" />
     <Content Include="Content\Images\Overlays\defaultOverlay.JPG" />
     <Content Include="Content\Images\Skirts\defaultSkirt.JPG" />
+    <Content Include="Content\lumen.css" />
     <Content Include="Content\prism.css" />
     <Content Include="Content\prism.js" />
     <Content Include="favicon.ico" />

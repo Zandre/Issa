@@ -24,7 +24,7 @@ namespace MVC
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/cerulean.css",
+                      "~/Content/lumen.css",
                       "~/Content/site.css"));
         }
     }
