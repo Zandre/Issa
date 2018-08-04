@@ -1,13 +1,8 @@
 ﻿namespace BookALook.Classes
 {
-    public class Bodice
+    public class Bodice : BaseWeddingGownItem
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Price { get; set; }
-        
-        public byte[] ImageData { get; set; }
+
     }
 
 }
