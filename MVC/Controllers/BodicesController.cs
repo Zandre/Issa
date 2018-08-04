@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
-using System.Web.WebPages;
 using BookALook.Classes;
 using BookALook.DomainModel;
 using BookALook.MVC.ViewModel;
+using MVC.ViewModel;
 
 namespace BookALook.MVC.Controllers
 {
@@ -39,6 +33,35 @@ namespace BookALook.MVC.Controllers
                 return HttpNotFound();
             }
             return View(bodice);
+        }
+
+        public ActionResult Image(int? id)
+        {
+            Bodice bodice = db.Bodices.Find(id);
+            if (bodice == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ImageVm viewModel = new ImageVm(bodice);
+            return View("ImageFrom", viewModel);
+        }
+
+        public ActionResult SaveImageData(int bodiceId, string imageData)
+        {
+            Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == bodiceId);
+            if (bodice.Id != 0)
+            {
+                imageData = imageData.Replace('-', '+');
+                imageData = imageData.Replace('_', '/');
+                imageData = imageData.Replace("data:image/png;base64,", "");
+                imageData = imageData.TrimEnd();
+                imageData = imageData.TrimStart();
+                byte[] newBytes = Convert.FromBase64String(imageData);
+                bodice.ImageData = newBytes;
+                db.Entry(bodice).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: Bodices/Create
@@ -130,46 +153,20 @@ namespace BookALook.MVC.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult SaveImageData(int bodiceId, string imageData)
-        {
-            Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == bodiceId);
-            if (bodice.Id != 0)
-            {
-                imageData = imageData.Replace('-', '+');
-                imageData = imageData.Replace('_', '/');
-                imageData = imageData.Replace("data:image/png;base64,", "");
-                imageData = imageData.TrimEnd();
-                imageData = imageData.TrimStart();
-                byte[] newBytes = Convert.FromBase64String(imageData);
-                bodice.ImageData = newBytes;
-                db.Entry(bodice).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return RedirectToAction("Index");
-        }
-
         public ActionResult Save(BodiceViewModel viewModel)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == viewModel.Id);
-            //    if (bodice.Id != 0)
-            //    {
-            //        bodice.Name = viewModel.Name;
-            //        bodice.Description = viewModel.Description;
-            //        bodice.Price = viewModel.Price;
-            //        bodice.ImageData = viewModel.ImageData;
-            //        if (viewModel.UploadImages != null)
-            //        {
-            //            MemoryStream stream = new MemoryStream();
-            //            viewModel.UploadImages.InputStream.CopyTo(stream);
-            //            byte[] imageData = stream.ToArray();
-            //            bodice.ImageData = imageData;
-            //        }
-            //        db.Entry(bodice).State = EntityState.Modified;
-            //        db.SaveChanges();
-            //    }
-            //}
+            if (ModelState.IsValid)
+            {
+                Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == viewModel.Id);
+                if (bodice.Id != 0)
+                {
+                    bodice.Name = viewModel.Name;
+                    bodice.Description = viewModel.Description;
+                    bodice.Price = viewModel.Price;
+                    db.Entry(bodice).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
             return RedirectToAction("Index");
         }
     }

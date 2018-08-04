@@ -1,0 +1,51 @@
+﻿@model MVC.ViewModel.ImageVm
+
+@{
+    ViewBag.Title = "ImageFrom";
+}
+
+<h2>@Model.Name</h2>
+@using (Html.BeginForm("SaveImageData", "Bodices", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id, new { id = "modelId" })
+    <div class="form-horizontal">
+        
+        <div class="form-group">
+            <div align="center">
+                @Html.ActionLink("Save", "", "Bodices", new { id = Model.Id }, new { @class = "btn btn-primary", onclick="SaveImageData();" }) 
+                @Html.ActionLink("Back", "Edit", "Bodices", new {id = Model.Id}, new {@class = "btn btn-warning"})
+                <a class="btn file-btn btn-info">
+                    <span>Upload</span>
+                    <input type="file" id="upload" value="Choose a file" accept="image/*"/>
+                </a>
+                @Html.ActionLink("Preview", "", null, new {@class= "btn btn-info upload-result" })                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-1-2">
+                <h4 align="center">Image Preview</h4>
+            </div>
+            <div class="col-1-2">
+                <h4 align="center">Upload New</h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-1-2">
+                <div align="center">
+                    <img width="200" id="imageData" height="300" style="border-radius: 8px" src="data:image; base64, @Convert.ToBase64String(Model.ImageData)"/>
+                </div>
+            </div>
+            <div class="col-1-2">
+                <div class="upload-demo-wrap">
+                    <div id="upload-demo"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+

@@ -1,16 +1,9 @@
 var Demo = (function() {
 
     function popupResult(result) {
-
-        //console.log("popupResult()");
-        console.log(result.src);
-
         event.preventDefault();
-
-        var image = document.getElementById("image");
-        var hiddenField = document.getElementById("imageData");
+        var image = document.getElementById("imageData");
         image.src = result.src;
-        hiddenField.src = result.src;
     }
 
 	function demoUpload() {
@@ -39,8 +32,8 @@ var Demo = (function() {
 
 		$uploadCrop = $('#upload-demo').croppie({
 			viewport: {
-				width: 50,
-				height: 150,
+				width: 200,
+				height: 300,
 				type: 'square'
 			},
 			enableExif: true

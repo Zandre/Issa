@@ -212,6 +212,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\BodiceViewModel.cs" />
     <Compile Include="ViewModel\DressViewModel.cs" />
+    <Compile Include="ViewModel\ImageVm.cs" />
     <Compile Include="ViewModel\OverlayViewModel.cs" />
     <Compile Include="ViewModel\SkirtViewModel.cs" />
   </ItemGroup>
@@ -303,6 +304,7 @@
     <Content Include="Views\Shared\PartialBodiceView.cshtml" />
     <Content Include="Views\Shared\PartialOverlayView.cshtml" />
     <Content Include="Views\Shared\PartialSkirtView.cshtml" />
+    <Content Include="Views\Bodices\ImageFrom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

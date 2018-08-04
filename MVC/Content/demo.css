@@ -83,14 +83,6 @@ section.who {
     padding: 5px 0;
 }
 
-input[type="number"],
-input[type="text"] {
-    border: 1px solid #aaa;
-    padding: 5px;
-    font-size: 18px;
-    width: 100px;
-}
-
 button,
 a.btn {
     background-color: #189094;
@@ -234,8 +226,8 @@ h2 {
     display: inline-block;    
 }
 .upload-demo-wrap {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 600px;
     margin: 0 auto;
 }
 
