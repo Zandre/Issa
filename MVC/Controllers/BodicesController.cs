@@ -7,6 +7,7 @@ using BookALook.Classes;
 using BookALook.DomainModel;
 using BookALook.MVC.ViewModel;
 using MVC.ViewModel;
+using MVC.Extensions;
 
 namespace BookALook.MVC.Controllers
 {
@@ -51,6 +52,7 @@ namespace BookALook.MVC.Controllers
 
         public ActionResult BodiceDetailsForm(int? id)
         {
+            //this.AddNotification("Going to America!", NotificationType.SUCCESS);
             if (id == null)
             {
                 WeddingGownItemVm emptyViewModel = new WeddingGownItemVm();

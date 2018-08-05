@@ -202,6 +202,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OverlaysController.cs" />
     <Compile Include="Controllers\SkirtsController.cs" />
+    <Compile Include="Extensions\NotificationExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -295,6 +296,7 @@
     <Content Include="Views\Shared\PartialOverlayView.cshtml" />
     <Content Include="Views\Shared\PartialSkirtView.cshtml" />
     <Content Include="Views\Shared\ImageForm.cshtml" />
+    <Content Include="Views\Shared\_Notifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
