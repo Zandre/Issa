@@ -34,25 +34,33 @@ namespace BookALook.MVC.Controllers
 
         public ActionResult SaveImageData(int bodiceId, string imageData)
         {
-            Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == bodiceId);
-            if (bodice.Id != 0)
+            try
             {
-                imageData = imageData.Replace('-', '+');
-                imageData = imageData.Replace('_', '/');
-                imageData = imageData.Replace("data:image/png;base64,", "");
-                imageData = imageData.TrimEnd();
-                imageData = imageData.TrimStart();
-                byte[] newBytes = Convert.FromBase64String(imageData);
-                bodice.ImageData = newBytes;
-                db.Entry(bodice).State = EntityState.Modified;
-                db.SaveChanges();
+                Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == bodiceId);
+                if (bodice.Id != 0)
+                {
+                    imageData = imageData.Replace('-', '+');
+                    imageData = imageData.Replace('_', '/');
+                    imageData = imageData.Replace("data:image/png;base64,", "");
+                    imageData = imageData.TrimEnd();
+                    imageData = imageData.TrimStart();
+                    byte[] newBytes = Convert.FromBase64String(imageData);
+                    bodice.ImageData = newBytes;
+                    db.Entry(bodice).State = EntityState.Modified;
+                    db.SaveChanges();
+                    this.AddNotification("Saved image", NotificationType.SUCCESS);
+                }
             }
-            return RedirectToAction("Index");
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
+            }
+            return RedirectToAction("BodiceDetailsForm", new {id = bodiceId});
         }
 
         public ActionResult BodiceDetailsForm(int? id)
         {
-            //this.AddNotification("Going to America!", NotificationType.SUCCESS);
             if (id == null)
             {
                 WeddingGownItemVm emptyViewModel = new WeddingGownItemVm();
@@ -84,24 +92,33 @@ namespace BookALook.MVC.Controllers
 
         public ActionResult SaveBodiceDetails(WeddingGownItemVm viewModel)
         {
-            if (ModelState.IsValid)
+            try
             {
-                Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == viewModel.Id);
-                if (bodice == null)
+                if (ModelState.IsValid)
                 {
-                    Bodice newBodice = viewModel.BaseWeddingGownItem() as Bodice;
-                    db.Entry(newBodice).State = EntityState.Added;
-                    db.Bodices.Add(newBodice);
-                    db.SaveChanges();
+                    Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == viewModel.Id);
+                    if (bodice == null)
+                    {
+                        Bodice newBodice = viewModel.BaseWeddingGownItem() as Bodice;
+                        db.Entry(newBodice).State = EntityState.Added;
+                        db.Bodices.Add(newBodice);
+                        db.SaveChanges();
+                    }
+                    else if (bodice.Id != 0)
+                    {
+                        bodice.Name = viewModel.Name;
+                        bodice.Description = viewModel.Description;
+                        bodice.Price = viewModel.Price;
+                        db.Entry(bodice).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    this.AddNotification("Saved details", NotificationType.SUCCESS);
                 }
-                else if (bodice.Id != 0)
-                {
-                    bodice.Name = viewModel.Name;
-                    bodice.Description = viewModel.Description;
-                    bodice.Price = viewModel.Price;
-                    db.Entry(bodice).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
             }
             return RedirectToAction("Index");
         }

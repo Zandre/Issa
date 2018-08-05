@@ -8,6 +8,7 @@ using BookALook.Classes;
 using BookALook.DomainModel;
 using BookALook.MVC.ViewModel;
 using MVC.ViewModel;
+using MVC.Extensions;
 
 namespace BookALook.MVC.Controllers
 {
@@ -33,20 +34,30 @@ namespace BookALook.MVC.Controllers
 
         public ActionResult SaveImageData(int skirtId, string imageData)
         {
-            Skirt skirt = db.Skirts.FirstOrDefault(b => b.Id == skirtId);
-            if (skirt.Id != 0)
+            try
             {
-                imageData = imageData.Replace('-', '+');
-                imageData = imageData.Replace('_', '/');
-                imageData = imageData.Replace("data:image/png;base64,", "");
-                imageData = imageData.TrimEnd();
-                imageData = imageData.TrimStart();
-                byte[] newBytes = Convert.FromBase64String(imageData);
-                skirt.ImageData = newBytes;
-                db.Entry(skirt).State = EntityState.Modified;
-                db.SaveChanges();
+                Skirt skirt = db.Skirts.FirstOrDefault(b => b.Id == skirtId);
+                if (skirt.Id != 0)
+                {
+                    imageData = imageData.Replace('-', '+');
+                    imageData = imageData.Replace('_', '/');
+                    imageData = imageData.Replace("data:image/png;base64,", "");
+                    imageData = imageData.TrimEnd();
+                    imageData = imageData.TrimStart();
+                    byte[] newBytes = Convert.FromBase64String(imageData);
+                    skirt.ImageData = newBytes;
+                    db.Entry(skirt).State = EntityState.Modified;
+                    db.SaveChanges();
+                    this.AddNotification("Saved image", NotificationType.SUCCESS);
+                }
             }
-            return RedirectToAction("Index");
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
+            }            
+
+            return RedirectToAction("SkirtDetailsForm", skirtId);
         }
 
         public ActionResult SkirtDetailsForm(int? id)
@@ -80,22 +91,32 @@ namespace BookALook.MVC.Controllers
         [HttpPost]
         public ActionResult SaveSkirtDetails(WeddingGownItemVm viewModel)
         {
-            Skirt skirt = db.Skirts.FirstOrDefault(b => b.Id == viewModel.Id);
-            if (skirt == null)
+            try
             {
-                Skirt newSkirt = viewModel.BaseWeddingGownItem() as Skirt;
-                db.Entry(newSkirt).State = EntityState.Added;
-                db.Skirts.Add(newSkirt);
-                db.SaveChanges();
+                Skirt skirt = db.Skirts.FirstOrDefault(b => b.Id == viewModel.Id);
+                if (skirt == null)
+                {
+                    Skirt newSkirt = viewModel.BaseWeddingGownItem() as Skirt;
+                    db.Entry(newSkirt).State = EntityState.Added;
+                    db.Skirts.Add(newSkirt);
+                    db.SaveChanges();
+                }
+                else if (skirt.Id != 0)
+                {
+                    skirt.Name = viewModel.Name;
+                    skirt.Description = viewModel.Description;
+                    skirt.Price = viewModel.Price;
+                    db.Entry(skirt).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                this.AddNotification("Saved details", NotificationType.SUCCESS);
             }
-            else if (skirt.Id != 0)
+            catch (Exception e)
             {
-                skirt.Name = viewModel.Name;
-                skirt.Description = viewModel.Description;
-                skirt.Price = viewModel.Price;
-                db.Entry(skirt).State = EntityState.Modified;
-                db.SaveChanges();
+                Console.WriteLine(e);
+                this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
             }
+
             return RedirectToAction("Index");
         }
     }

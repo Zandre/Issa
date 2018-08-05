@@ -8,6 +8,7 @@ using BookALook.Classes;
 using BookALook.DomainModel;
 using BookALook.MVC.ViewModel;
 using MVC.ViewModel;
+using MVC.Extensions;
 
 namespace BookALook.MVC.Controllers
 {
@@ -34,20 +35,29 @@ namespace BookALook.MVC.Controllers
 
         public ActionResult SaveImageData(int overlayId, string imageData)
         {
-            Overlay overlay = db.Overlays.FirstOrDefault(b => b.Id == overlayId);
-            if (overlay.Id != 0)
+            try
             {
-                imageData = imageData.Replace('-', '+');
-                imageData = imageData.Replace('_', '/');
-                imageData = imageData.Replace("data:image/png;base64,", "");
-                imageData = imageData.TrimEnd();
-                imageData = imageData.TrimStart();
-                byte[] newBytes = Convert.FromBase64String(imageData);
-                overlay.ImageData = newBytes;
-                db.Entry(overlay).State = EntityState.Modified;
-                db.SaveChanges();
+                Overlay overlay = db.Overlays.FirstOrDefault(b => b.Id == overlayId);
+                if (overlay.Id != 0)
+                {
+                    imageData = imageData.Replace('-', '+');
+                    imageData = imageData.Replace('_', '/');
+                    imageData = imageData.Replace("data:image/png;base64,", "");
+                    imageData = imageData.TrimEnd();
+                    imageData = imageData.TrimStart();
+                    byte[] newBytes = Convert.FromBase64String(imageData);
+                    overlay.ImageData = newBytes;
+                    db.Entry(overlay).State = EntityState.Modified;
+                    db.SaveChanges();
+                    this.AddNotification("Saved image", NotificationType.SUCCESS);
+                }
             }
-            return RedirectToAction("Index");
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
+            }
+            return RedirectToAction("OverlayDetailsForm", overlayId);
         }
 
         public ActionResult OverlayDetailsForm(int? id)
@@ -81,21 +91,30 @@ namespace BookALook.MVC.Controllers
         [HttpPost]
         public ActionResult SaveOverlayDetails(WeddingGownItemVm viewModel)
         {
-            Overlay overlay = db.Overlays.FirstOrDefault(b => b.Id == viewModel.Id);
-            if (overlay == null)
+            try
             {
-                Overlay newOverlay = viewModel.BaseWeddingGownItem() as Overlay;
-                db.Entry(newOverlay).State = EntityState.Added;
-                db.Overlays.Add(newOverlay);
-                db.SaveChanges();
+                Overlay overlay = db.Overlays.FirstOrDefault(b => b.Id == viewModel.Id);
+                if (overlay == null)
+                {
+                    Overlay newOverlay = viewModel.BaseWeddingGownItem() as Overlay;
+                    db.Entry(newOverlay).State = EntityState.Added;
+                    db.Overlays.Add(newOverlay);
+                    db.SaveChanges();
+                }
+                else if (overlay.Id != 0)
+                {
+                    overlay.Name = viewModel.Name;
+                    overlay.Description = viewModel.Description;
+                    overlay.Price = viewModel.Price;
+                    db.Entry(overlay).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                this.AddNotification("Saved details", NotificationType.SUCCESS);
             }
-            else if (overlay.Id != 0)
+            catch (Exception e)
             {
-                overlay.Name = viewModel.Name;
-                overlay.Description = viewModel.Description;
-                overlay.Price = viewModel.Price;
-                db.Entry(overlay).State = EntityState.Modified;
-                db.SaveChanges();
+                Console.WriteLine(e);
+                this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
             }
             return RedirectToAction("Index");
         }

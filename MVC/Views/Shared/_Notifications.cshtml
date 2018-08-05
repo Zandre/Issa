@@ -9,7 +9,7 @@
 <!-- display errors -->
 @if (errorList != null)
 {
-    <div class="alert alert-danger alert-dismissable">
+    <div class="alert alert-danger alert-dismissable" id="errorDiv">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         @if(errorList.Count() > 1){
             <strong><span class="glyphicon glyphicon-remove"></span> There are @errorList.Count() errors: </strong>
@@ -30,7 +30,7 @@
 <!-- display warnings -->
 @if (warningList != null)
 {
-    <div class="alert alert-warning alert-dismissable">
+    <div class="alert alert-warning alert-dismissable" id="warningDiv">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         @if(warningList.Count() > 1){
             <strong><span class="glyphicon glyphicon-warning-sign"></span> There are @warningList.Count() warnings: </strong>
@@ -51,7 +51,7 @@
 <!-- display success -->
 @if (successList != null)
 {
-    <div class="alert alert-success alert-dismissable">
+    <div class="alert alert-success alert-dismissable" id="successDiv">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         @if(successList.Count() > 1){
             <strong><span class="glyphicon glyphicon-ok"></span> There are @successList.Count() successful notifications: </strong>
@@ -72,7 +72,7 @@
 <!-- display success -->
 @if (infoList != null)
 {
-    <div class="alert alert-info alert-dismissable">
+    <div class="alert alert-info alert-dismissable" id="infoDiv">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         @if(infoList.Count() > 1){
             <strong><span class="glyphicon glyphicon-info-sign"></span> There are @infoList.Count() notifications: </strong>

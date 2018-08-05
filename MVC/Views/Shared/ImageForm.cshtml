@@ -14,8 +14,8 @@
         
         <div class="form-group">
             <div align="center">
-                @Html.ActionLink("Save", "", "Bodices", new { id = Model.Id }, new { @class = "btn btn-primary", onclick="SaveImageData("+Model.ItemType+");" })
-                @Html.ActionLink("Back", "BodiceDetailsForm", "Bodices", new {id = Model.Id}, new {@class = "btn btn-warning"})
+                @Html.ActionLink("Save", "", "", new { id = Model.Id }, new { @class = "btn btn-primary", onclick="SaveImageData("+Model.ItemType+");" })
+                @Html.ActionLink("Back", "", "", new {id = Model.Id}, new {@class = "btn btn-warning"})
                 <a class="btn file-btn btn-info">
                     <span>Upload</span>
                     <input type="file" id="upload" value="Choose a file" accept="image/*"/>
