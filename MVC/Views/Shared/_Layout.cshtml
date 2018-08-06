@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookALook</title>
+    <title>Issa</title>
     <link rel="icon" type="image/ico" href="~/Content/Images/dress.ico" />
 
     <link rel="stylesheet" href="~/Content/croppie.css" />
@@ -66,15 +66,17 @@
         var imageData = document.getElementById("imageData").src;
         var modelId = document.getElementById("modelId").value;
 
+
+
         var _url = "";
-        if (itemType === 1) {
-            _url =  "@Url.Action("SaveImageData", "Bodices")";
+        if (itemType === 1) {     
+            _url = "@Url.Action("SaveImageData", "Bodices")";
         }
         if (itemType === 2) {
-            _url =  "@Url.Action("SaveImageData", "Skirts")";
+            _url = "@Url.Action("SaveImageData", "Skirts")";
         }
         if (itemType === 3) {
-            _url =  "@Url.Action("SaveImageData", "Overlays")";
+            _url = "@Url.Action("SaveImageData", "Overlays")";
         }
 
         jQuery.ajax({
@@ -82,7 +84,7 @@
             url: _url,
             dataType: "json",
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({ bodiceId: modelId, imageData: imageData }),
+            data: JSON.stringify({ id: modelId, imageData: imageData }),
             success: function (data) {
                 alert(data);
             },

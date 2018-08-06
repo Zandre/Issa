@@ -33,11 +33,11 @@ namespace BookALook.MVC.Controllers
             return View("ImageForm", viewModel);
         }
 
-        public ActionResult SaveImageData(int overlayId, string imageData)
+        public ActionResult SaveImageData(int id, string imageData)
         {
             try
             {
-                Overlay overlay = db.Overlays.FirstOrDefault(b => b.Id == overlayId);
+                Overlay overlay = db.Overlays.FirstOrDefault(b => b.Id == id);
                 if (overlay != null)
                 {
                     imageData = imageData.Replace('-', '+');

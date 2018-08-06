@@ -32,11 +32,11 @@ namespace BookALook.MVC.Controllers
             return View("ImageForm", viewModel);
         }
 
-        public ActionResult SaveImageData(int bodiceId, string imageData)
+        public ActionResult SaveImageData(int id, string imageData)
         {
             try
             {
-                Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == bodiceId);
+                Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == id);
                 if (bodice != null)
                 {
                     imageData = imageData.Replace('-', '+');

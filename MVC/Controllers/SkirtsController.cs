@@ -32,11 +32,11 @@ namespace BookALook.MVC.Controllers
             return View("ImageForm", viewModel);
         }
 
-        public ActionResult SaveImageData(int skirtId, string imageData)
+        public ActionResult SaveImageData(int id, string imageData)
         {
             try
             {
-                Skirt skirt = db.Skirts.FirstOrDefault(b => b.Id == skirtId);
+                Skirt skirt = db.Skirts.FirstOrDefault(b => b.Id == id);
                 if (skirt != null)
                 {
                     imageData = imageData.Replace('-', '+');
