@@ -1,12 +1,12 @@
 ﻿@model MVC.ViewModel.ImageVm
 
 @{
-    ViewBag.Title = "ImageFrom";
+    ViewBag.Title = "ImageForm";
+    ViewBag.ImageType = "";
 }
 
 <h2>@Model.Name</h2>
-
-@using (Html.BeginForm("SaveImageData", "Bodices", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SaveImageData", Model.ItemTypeString, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Id, new { id = "modelId" })
@@ -14,8 +14,8 @@
         
         <div class="form-group">
             <div align="center">
-                @Html.ActionLink("Save", "", "", new { id = Model.Id }, new { @class = "btn btn-primary", onclick="SaveImageData("+Model.ItemType+");" })
-                @Html.ActionLink("Back", "", "", new {id = Model.Id}, new {@class = "btn btn-warning"})
+                @Html.ActionLink("Save", "", Model.ItemTypeString, new { id = Model.Id }, new { @class = "btn btn-primary", onclick="SaveImageData("+Model.ItemType+");" })
+                @Html.ActionLink("Back", Model.ItemTypeDetailsFormString, Model.ItemTypeString, new {id = Model.Id}, new {@class = "btn btn-warning"})
                 <a class="btn file-btn btn-info">
                     <span>Upload</span>
                     <input type="file" id="upload" value="Choose a file" accept="image/*"/>

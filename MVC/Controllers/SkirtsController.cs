@@ -21,7 +21,7 @@ namespace BookALook.MVC.Controllers
             return View(db.Skirts.ToList());
         }
 
-        public ActionResult Image(int? id)
+        public ActionResult ImageForm(int? id)
         {
             Skirt skirt = db.Skirts.Find(id);
             if (skirt == null)
@@ -37,7 +37,7 @@ namespace BookALook.MVC.Controllers
             try
             {
                 Skirt skirt = db.Skirts.FirstOrDefault(b => b.Id == skirtId);
-                if (skirt.Id != 0)
+                if (skirt != null)
                 {
                     imageData = imageData.Replace('-', '+');
                     imageData = imageData.Replace('_', '/');
@@ -49,15 +49,15 @@ namespace BookALook.MVC.Controllers
                     db.Entry(skirt).State = EntityState.Modified;
                     db.SaveChanges();
                     this.AddNotification("Saved image", NotificationType.SUCCESS);
+                    return RedirectToAction("SkirtDetailsForm", new { imageData = skirt.Id});
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
-            }            
-
-            return RedirectToAction("SkirtDetailsForm", skirtId);
+            }
+            return RedirectToAction("Index");
         }
 
         public ActionResult SkirtDetailsForm(int? id)
@@ -74,19 +74,7 @@ namespace BookALook.MVC.Controllers
                 return HttpNotFound();
             }
             return View(viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult SkirtDetailsForm([Bind(Include = "Id,Name,Description,Price")] Skirt skirt)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(skirt).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return RedirectToAction("Index");
-        }
+        }  
 
         [HttpPost]
         public ActionResult SaveSkirtDetails(WeddingGownItemVm viewModel)
@@ -110,6 +98,7 @@ namespace BookALook.MVC.Controllers
                     db.SaveChanges();
                 }
                 this.AddNotification("Saved details", NotificationType.SUCCESS);
+                return RedirectToAction("SkirtDetailsForm", new { id = viewModel.Id });
             }
             catch (Exception e)
             {

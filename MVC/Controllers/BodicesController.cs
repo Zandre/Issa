@@ -21,7 +21,7 @@ namespace BookALook.MVC.Controllers
             return View(db.Bodices.ToList());
         }
 
-        public ActionResult Image(int? id)
+        public ActionResult ImageForm(int? id)
         {
             Bodice bodice = db.Bodices.Find(id);
             if (bodice == null)
@@ -37,7 +37,7 @@ namespace BookALook.MVC.Controllers
             try
             {
                 Bodice bodice = db.Bodices.FirstOrDefault(b => b.Id == bodiceId);
-                if (bodice.Id != 0)
+                if (bodice != null)
                 {
                     imageData = imageData.Replace('-', '+');
                     imageData = imageData.Replace('_', '/');
@@ -49,6 +49,7 @@ namespace BookALook.MVC.Controllers
                     db.Entry(bodice).State = EntityState.Modified;
                     db.SaveChanges();
                     this.AddNotification("Saved image", NotificationType.SUCCESS);
+                    return RedirectToAction("BodiceDetailsForm", new { id = bodice.Id });
                 }
             }
             catch (Exception e)
@@ -56,7 +57,7 @@ namespace BookALook.MVC.Controllers
                 Console.WriteLine(e);
                 this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
             }
-            return RedirectToAction("BodiceDetailsForm", new {id = bodiceId});
+            return RedirectToAction("Index");
         }
 
         public ActionResult BodiceDetailsForm(int? id)
@@ -73,21 +74,6 @@ namespace BookALook.MVC.Controllers
                 return HttpNotFound();
             }
             return View(viewModel);
-        }
-
-        // POST: Bodices/BodiceDetailsForm/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult BodiceDetailsForm([Bind(Include = "Id,Name,Description,Price")] Bodice bodice)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(bodice).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return RedirectToAction("Index");
         }
 
         public ActionResult SaveBodiceDetails(WeddingGownItemVm viewModel)
@@ -113,6 +99,7 @@ namespace BookALook.MVC.Controllers
                         db.SaveChanges();
                     }
                     this.AddNotification("Saved details", NotificationType.SUCCESS);
+                    return RedirectToAction("BodiceDetailsForm", new { id = viewModel.Id });
                 }
             }
             catch (Exception e)

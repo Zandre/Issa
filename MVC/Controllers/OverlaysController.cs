@@ -22,7 +22,7 @@ namespace BookALook.MVC.Controllers
             return View(db.Overlays.ToList());
         }
 
-        public ActionResult Image(int? id)
+        public ActionResult ImageForm(int? id)
         {
             Overlay overlay = db.Overlays.Find(id);
             if (overlay == null)
@@ -38,7 +38,7 @@ namespace BookALook.MVC.Controllers
             try
             {
                 Overlay overlay = db.Overlays.FirstOrDefault(b => b.Id == overlayId);
-                if (overlay.Id != 0)
+                if (overlay != null)
                 {
                     imageData = imageData.Replace('-', '+');
                     imageData = imageData.Replace('_', '/');
@@ -50,6 +50,7 @@ namespace BookALook.MVC.Controllers
                     db.Entry(overlay).State = EntityState.Modified;
                     db.SaveChanges();
                     this.AddNotification("Saved image", NotificationType.SUCCESS);
+                    return RedirectToAction("OverlayDetailsForm", new { id = overlay.Id });
                 }
             }
             catch (Exception e)
@@ -57,7 +58,7 @@ namespace BookALook.MVC.Controllers
                 Console.WriteLine(e);
                 this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
             }
-            return RedirectToAction("OverlayDetailsForm", overlayId);
+            return RedirectToAction("Index");
         }
 
         public ActionResult OverlayDetailsForm(int? id)
@@ -76,19 +77,6 @@ namespace BookALook.MVC.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult OverlayDetailsForm([Bind(Include = "Id,Name,Description,Price")] Overlay overlay)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(overlay).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
         public ActionResult SaveOverlayDetails(WeddingGownItemVm viewModel)
         {
             try
@@ -110,6 +98,7 @@ namespace BookALook.MVC.Controllers
                     db.SaveChanges();
                 }
                 this.AddNotification("Saved details", NotificationType.SUCCESS);
+                return RedirectToAction("OverlayDetailsForm", new { id = viewModel.Id });
             }
             catch (Exception e)
             {
