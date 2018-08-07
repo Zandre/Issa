@@ -32,6 +32,7 @@ namespace BookALook.MVC.Controllers
             return View("ImageForm", viewModel);
         }
 
+        [HttpPost]
         public ActionResult SaveImageData(int id, string imageData)
         {
             try
@@ -49,13 +50,13 @@ namespace BookALook.MVC.Controllers
                     db.Entry(skirt).State = EntityState.Modified;
                     db.SaveChanges();
                     this.AddNotification("Saved image", NotificationType.SUCCESS);
-                    return RedirectToAction("SkirtDetailsForm", new { imageData = skirt.Id});
+                    return RedirectToAction("SkirtDetailsForm", new { id = skirt.Id});
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
+                this.AddNotification(e.Message, NotificationType.ERROR);
             }
             return RedirectToAction("Index");
         }
@@ -103,7 +104,7 @@ namespace BookALook.MVC.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
+                this.AddNotification(e.Message, NotificationType.ERROR);
             }
 
             return RedirectToAction("Index");

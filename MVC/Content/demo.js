@@ -3,6 +3,10 @@ var Demo = (function() {
     function popupResult(result) {
         event.preventDefault();
         var image = document.getElementById("imageData");
+        
+        console.log("sadfsdf");
+        $("#ImageData").val(result.src);
+
         image.src = result.src;
     }
 
@@ -42,7 +46,10 @@ var Demo = (function() {
 		$('#upload').on('change', function() {           
 		    readFile(this);
 		});
-		$('.upload-result').on('click', function (ev) {
+        $('.upload-result').on('click', function (ev) {
+
+            console.log("click");
+
 			$uploadCrop.croppie('result', {
 				type: 'canvas',
 				size: 'viewport'

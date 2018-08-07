@@ -10,17 +10,20 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Id, new { id = "modelId" })
+    @Html.HiddenFor(model => model.ItemType)
+    @Html.HiddenFor(model => model.ImageData)
     <div class="form-horizontal">
         
         <div class="form-group">
             <div align="center">
-                @Html.ActionLink("Save", "", Model.ItemTypeString, new { id = Model.Id }, new { @class = "btn btn-primary", onclick="SaveImageData("+Model.ItemType+");" })
-                @Html.ActionLink("Back", Model.ItemTypeDetailsFormString, Model.ItemTypeString, new {id = Model.Id}, new {@class = "btn btn-warning"})
+
+                <input type="submit" value="Save" class="btn btn-primary" />                
+                @Html.ActionLink("Back", Model.ItemTypeDetailsFormString, Model.ItemTypeString, new { id = Model.Id }, new { @class = "btn btn-warning" })
                 <a class="btn file-btn btn-info">
                     <span>Upload</span>
-                    <input type="file" id="upload" value="Choose a file" accept="image/*"/>
+                    <input type="file" id="upload" value="Choose a file" accept="image/*" />
                 </a>
-                @Html.ActionLink("Preview", "", null, new {@class= "btn btn-info upload-result" })                
+                @Html.ActionLink("Preview", "", null, new { @class = "btn btn-info upload-result" })
             </div>
         </div>
 

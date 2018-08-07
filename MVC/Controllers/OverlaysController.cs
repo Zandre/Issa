@@ -33,6 +33,7 @@ namespace BookALook.MVC.Controllers
             return View("ImageForm", viewModel);
         }
 
+        [HttpPost]
         public ActionResult SaveImageData(int id, string imageData)
         {
             try
@@ -56,7 +57,7 @@ namespace BookALook.MVC.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
+                this.AddNotification(e.Message, NotificationType.ERROR);
             }
             return RedirectToAction("Index");
         }
@@ -103,7 +104,7 @@ namespace BookALook.MVC.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                this.AddNotification("Error: " + e.Message, NotificationType.ERROR);
+                this.AddNotification(e.Message, NotificationType.ERROR);
             }
             return RedirectToAction("Index");
         }
